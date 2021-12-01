@@ -4,7 +4,7 @@
 
 ## Try it out
 
-Executables for Windows and Linux are available on the releases page
+Executables for Windows and Linux are available on the [releases page](https://github.com/JoshuaPostel/spectrogram/releases)
 
 ## Limitations
 
