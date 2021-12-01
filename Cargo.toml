@@ -1,0 +1,24 @@
+[package]
+name = "spectrogram"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+iced = { version = "0.3.0", features = ["canvas"]}
+iced_native = "0.4.0"
+iced_graphics = "0.2.0"
+iced_audio = "0.7.0"
+iced_wgpu = "0.4.0"
+byteorder = "1.4"
+num = "0.3" # not using 0.4 for compatability with fftw
+fftw = "0.7.0"
+rfd = "0.5.1"
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "dft"
+harness = false
