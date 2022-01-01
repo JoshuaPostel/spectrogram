@@ -8,7 +8,7 @@ Executables for Windows and Linux are available on the [releases page](https://g
 
 ## Limitations
 
-The .WAV parser is far from complete, as it only supports 16 bit samples and only RIFF, FMT, and DATA headers.  To avoid heavy workloads, the .WAV file is limited to 1MB.  If an incompatible file is opened, a dialog box with a descriptive error message shold appear.
+The .WAV parser is far from complete, as it only supports 16 bit samples and only RIFF, FMT, and DATA headers.  To avoid heavy workloads, the .WAV file is limited to 1MB.  If an incompatible file is opened, a dialog box with a descriptive error message should appear.
 
 ## Motivation
 
