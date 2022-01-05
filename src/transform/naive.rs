@@ -7,12 +7,7 @@ use std::f64::consts::PI;
 const i: Complex<f64> = Complex::new(0.0, 1.0);
 
 #[inline]
-fn calculate_kth_nth(
-    x_n: &f64,
-    n: usize,
-    n_samples: usize,
-    k: usize,
-) -> Complex<f64> {
+fn calculate_kth_nth(x_n: &f64, n: usize, n_samples: usize, k: usize) -> Complex<f64> {
     let n = n.to_f64().unwrap();
     let n_samples = n_samples.to_f64().unwrap();
     let k = k.to_f64().unwrap();

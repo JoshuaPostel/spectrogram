@@ -219,7 +219,6 @@ impl Application for Spectrogram {
         let y_unit = self.y_axis.scale.unit.clone();
         let y_mapping = self.y_axis.scale.mapping.clone();
 
-
         let row1 = Row::new()
             .height(Length::FillPortion(20))
             .push(self.y_axis.view())

@@ -2,7 +2,7 @@ use num::cast::ToPrimitive;
 use num::{Complex, Integer};
 
 use std::f64::consts::{PI, TAU};
-use std::simd::{Simd, f64x8};
+use std::simd::{f64x8, Simd};
 
 #[allow(non_upper_case_globals)]
 const i: Complex<f64> = Complex::new(0.0, 1.0);
@@ -15,7 +15,6 @@ pub fn simd_calculate_kth_x8(
     n_samples: Simd<f64, 8>,
     k: Simd<f64, 8>,
 ) -> Complex<f64> {
-
     let inner = (EIGHT_TAU * k * n / n_samples).to_array();
     let mut inner_cos = [0.0; 8];
     let mut inner_sin = [0.0; 8];
@@ -25,7 +24,15 @@ pub fn simd_calculate_kth_x8(
     }
     let real = x_n * f64x8::from_array(inner_cos);
     let imaginary = x_n * f64x8::from_array(inner_sin);
-    Complex::new(real.horizontal_sum(), - imaginary.horizontal_sum())
+    Complex::new(real.horizontal_sum(), -imaginary.horizontal_sum())
+}
+
+fn calculate_kth_nth(x_n: &f64, n: usize, n_samples: usize, k: usize) -> Complex<f64> {
+    let n = n.to_f64().unwrap();
+    let n_samples = n_samples.to_f64().unwrap();
+    let k = k.to_f64().unwrap();
+    let inner = 2.0 * PI * k * n / n_samples;
+    x_n * (inner.cos() - i * inner.sin())
 }
 
 #[inline]
@@ -35,43 +42,18 @@ fn simd_calculate_kth(k: usize, samples: &Vec<f64>) -> Complex<f64> {
     let n_samples_x8 = f64x8::from_array([n_samples; 8]);
     let k_x8 = f64x8::splat(k.to_f64().unwrap());
     for (idx, eight) in samples.chunks_exact(8).enumerate() {
-    //for (idx, eight) in samples.chunks(8).enumerate() {
-        let n = f64x8::splat(idx.to_f64().unwrap() * 8.0) + f64x8::from_array([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0]);
-        //let x_n = f64x8::gather_or_default(eight, Simd::from_array([0, 1, 2, 3, 4, 5, 6, 7]));
-        //let tmp = simd_calculate_kth_x8(x_n, n, n_samples_x8, k_x8);
+        let n = f64x8::splat(idx.to_f64().unwrap() * 8.0)
+            + f64x8::from_array([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0]);
         let tmp = simd_calculate_kth_x8(f64x8::from_slice(eight), n, n_samples_x8, k_x8);
         x_k += tmp;
     }
     let remainder = samples.len() % 8;
     if remainder != 0 {
-       for (idx, x_n) in samples[samples.len() - remainder..].iter().enumerate() {
-           let n = (samples.len() - remainder) + idx;
-           let tmp = calculate_kth_nth(x_n, n, samples.len(), k);
-           x_k += tmp;
-       }
-    }
-    x_k
-}
-
-fn calculate_kth_nth(
-    x_n: &f64,
-    n: usize,
-    n_samples: usize,
-    k: usize,
-) -> Complex<f64> {
-    let n = n.to_f64().unwrap();
-    let n_samples = n_samples.to_f64().unwrap();
-    let k = k.to_f64().unwrap();
-    let inner = 2.0 * PI * k * n / n_samples;
-    x_n * (inner.cos() - i * inner.sin())
-}
-
-fn calculate_kth(k: usize, samples: &Vec<f64>) -> Complex<f64> {
-    let mut x_k = Complex::new(0.0, 0.0);
-    let n_samples = samples.len();
-    for (n, x_n) in samples.iter().enumerate() {
-        let tmp = calculate_kth_nth(x_n, n, n_samples, k);
-        x_k += tmp;
+        for (idx, x_n) in samples[samples.len() - remainder..].iter().enumerate() {
+            let n = (samples.len() - remainder) + idx;
+            let tmp = calculate_kth_nth(x_n, n, samples.len(), k);
+            x_k += tmp;
+        }
     }
     x_k
 }
