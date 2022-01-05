@@ -72,6 +72,7 @@ pub fn fourier_transform<I: Integer + ToPrimitive>(samples: Vec<I>) -> Vec<Compl
     transformed_samples
 }
 
+// TODO implement with simd
 fn calculate_kth_nth_inverse(
     x_n: &Complex<f64>,
     n: usize,
@@ -85,6 +86,7 @@ fn calculate_kth_nth_inverse(
     x_n * (inner.cos() + i * inner.sin())
 }
 
+// TODO implement with simd
 fn calculate_kth_inverse(k: usize, samples: &Vec<Complex<f64>>) -> Complex<f64> {
     let mut x_k = Complex::new(0.0, 0.0);
     let n_samples = samples.len();
