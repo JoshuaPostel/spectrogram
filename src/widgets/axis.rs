@@ -226,18 +226,18 @@ fn fill_from_primitive(primitive: Primitive, frame: &mut canvas::Frame) {
 
 const THIN_TICKS: style::tick_marks::Style = style::tick_marks::Style {
     tier_1: style::tick_marks::Shape::Line {
-                length: 4.0,
-                width: 1.0,
-                color: Color::BLACK,
-            },
-            tier_2: style::tick_marks::Shape::Line {
-                length: 3.0,
-                width: 1.0,
-                color: Color::BLACK,
-            },
-            tier_3: style::tick_marks::Shape::Line {
-                length: 2.0,
-                width: 1.0,
-                color: Color::BLACK,
-            },
+        length: 4.0,
+        width: 1.0,
+        color: Color::BLACK,
+    },
+    tier_2: style::tick_marks::Shape::Line {
+        length: 3.0,
+        width: 1.0,
+        color: Color::BLACK,
+    },
+    tier_3: style::tick_marks::Shape::Line {
+        length: 2.0,
+        width: 1.0,
+        color: Color::BLACK,
+    },
 };

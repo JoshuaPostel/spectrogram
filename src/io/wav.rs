@@ -29,7 +29,10 @@ impl RIFFHeader {
             four_cc,
         };
         if file_size > 1_000_000 {
-            Err(format!("maximum file size is 1MB, found {:.1}MB", file_size as f32 / 1_000_000.0))
+            Err(format!(
+                "maximum file size is 1MB, found {:.1}MB",
+                file_size as f32 / 1_000_000.0
+            ))
         } else {
             Ok(header)
         }
