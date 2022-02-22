@@ -6,7 +6,7 @@
 
 Executables for Windows and Linux are available on the [releases page](https://github.com/JoshuaPostel/spectrogram/releases)
 
-To run from source, the nightly compiler must be used: `cargo +nightly run`
+To run from source, the nightly compiler is required: `cargo +nightly run`
 
 ## Limitations
 
